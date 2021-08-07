@@ -10,7 +10,7 @@
             const SOI = new Uint8Array(2);
             SOI[0] = 0xFF;
             SOI[1] = 0xD8;
-            const CONTENT_LENGTH = 'Content-length';
+            const CONTENT_LENGTH = 'content-length';
             const TYPE_JPEG = 'image/jpeg';
 
             fetch(url)
@@ -92,8 +92,8 @@
                 let contentLength = -1;
                 headers.split('\n').forEach((header, _) => {
                     const pair = header.split(':');
-                    if (pair[0] === CONTENT_LENGTH) {
-                    contentLength = pair[1];
+                    if (pair[0].toLowerCase() === CONTENT_LENGTH) { // Fix for issue https://github.com/aruntj/mjpeg-readable-stream/issues/3 suggested by martapanc
+                        contentLength = pair[1];
                     }
                 })
                 return contentLength;
