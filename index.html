@@ -12,6 +12,7 @@
             SOI[1] = 0xD8;
             const CONTENT_LENGTH = 'content-length';
             const TYPE_JPEG = 'image/jpeg';
+            let image = document.getElementById('image');
 
             fetch(url)
             .then(response => {
@@ -68,7 +69,9 @@
                             // we're done reading the jpeg. Time to render it. 
                             else {
                                 // console.log("jpeg read with bytes : " + bytesRead);
-                                document.getElementById('image').src = URL.createObjectURL(new Blob([imageBuffer], {type: TYPE_JPEG}));
+                                let frame = URL.createObjectURL(new Blob([imageBuffer], {type: MJPEG.TYPE_JPEG})) 
+                                image.src = frame;
+                                URL.revokeObjectURL(frame)
                                 frames++;
                                 contentLength = 0;
                                 bytesRead = 0;
